@@ -1,0 +1,43 @@
+version: "3"
+services:
+  mqtt:
+    image: aietes/mqtt:latest
+    restart: unless-stopped
+    volumes:
+      - mqtt-etc:/etc/mosquitto
+    networks:
+      - homenet
+  node-red:
+    image: aietes/node-red:latest
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - "1880:1880"
+    volumes:
+      - node-red:/root/.node-red
+    networks:
+      - homenet
+  homegear:
+    image: aietes/homegear:latest
+    privileged: true
+    restart: unless-stopped
+    ports:
+      - "2001:2001"
+      - "2002:2002"
+      - "2003:2003"
+    volumes:
+      - homegear-etc:/etc/homegear
+      - homegear-lib:/var/lib/homegear
+      - homegear-log:/var/log/homegear
+    devices:
+      - "/dev/ttyAMA0:/dev/ttyAMA0"
+    networks:
+      - homenet
+networks:
+  homenet:
+volumes:
+  mqtt-etc:
+  node-red:
+  homegear-etc:
+  homegear-lib:
+  homegear-log:
