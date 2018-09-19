@@ -16,9 +16,8 @@ RUN apt-get update && apt-get install -y \
     python-dev \
     python-imaging \
     git \
-    net-tools:armhf
-
-RUN apt-get clean && rm -rf /var/lib/apt/lists/* /tmp/* /var/tmp/*
+    net-tools:armhf && \
+    apt-get clean && rm -rf /var/lib/apt/lists/*
 
 RUN mkdir -p /root/python
 RUN mkdir -p /root/.node-red
